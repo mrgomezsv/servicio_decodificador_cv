@@ -3,7 +3,7 @@ module.exports = {
     name: 'cv-decoder-service',
     script: 'main.py',
     interpreter: './venv/bin/python',
-    cwd: '/ruta/completa/a/Servicio_Decodificador_CV',
+    cwd: '/root/servicio_decodificador_cv',
     instances: 1,
     autorestart: true,
     watch: false,
