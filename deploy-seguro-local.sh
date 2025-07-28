@@ -317,9 +317,9 @@ show_final_info() {
 main() {
     log "Iniciando deployment seguro desde ubicación actual..."
     
-    # Verificar que estamos como usuario correcto
-    if [ "$EUID" -eq 0 ]; then
-        error "No ejecutar como root. Usa un usuario con permisos sudo."
+    # Verificar que estamos en el directorio correcto
+    if [ ! -f "main.py" ]; then
+        error "No se encontró main.py. Asegúrate de estar en el directorio del servicio Python."
     fi
     
     # Verificar servicios existentes
