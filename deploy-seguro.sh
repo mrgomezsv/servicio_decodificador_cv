@@ -204,17 +204,17 @@ check_database() {
     
     # Verificar conexión
     python3 -c "
-import pymysql
+import psycopg2
 import os
 try:
-    connection = pymysql.connect(
+    connection = psycopg2.connect(
         host=os.getenv('DB_HOST', 'localhost'),
-        port=int(os.getenv('DB_PORT', 3306)),
+        port=int(os.getenv('DB_PORT', 5432)),
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PASSWORD'),
         database=os.getenv('DB_NAME')
     )
-    print('✅ Conexión a base de datos exitosa')
+    print('✅ Conexión a base de datos PostgreSQL exitosa')
     connection.close()
 except Exception as e:
     print(f'❌ Error de conexión: {e}')
@@ -222,7 +222,7 @@ except Exception as e:
 "
     
     if [ $? -ne 0 ]; then
-        error "No se pudo conectar a la base de datos"
+        error "No se pudo conectar a la base de datos PostgreSQL"
     fi
 }
 

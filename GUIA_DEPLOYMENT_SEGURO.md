@@ -88,10 +88,10 @@ nano /var/www/cv-decoder-service/.env
 ```env
 # Base de datos (usar la misma que el backend)
 DB_HOST=localhost
-DB_PORT=3306
-DB_USER=tu_usuario_mysql
-DB_PASSWORD=tu_contraseña_mysql
-DB_NAME=tu_base_datos
+DB_PORT=5432
+DB_USER=mrgomez  # o el usuario que uses
+DB_PASSWORD=Karin2100  # tu contraseña
+DB_NAME=consultora_db
 
 # Servicio
 SERVICE_PORT=8001
@@ -101,7 +101,7 @@ SERVICE_HOST=0.0.0.0
 LOG_LEVEL=INFO
 LOG_FILE=logs/cv-decoder.log
 
-# CORS (para desarrollo)
+# CORS
 CORS_ORIGINS=*
 
 # Límites de archivo
@@ -262,11 +262,13 @@ sudo kill -9 PID
 ### **Problema: Error de base de datos**
 ```bash
 # Verificar conexión
-mysql -u usuario -p -h localhost
+psql -U mrgomez -d consultora_db -h localhost
 
 # Verificar tabla
-USE tu_base_datos;
-SHOW TABLES LIKE 'cv_extracted_data';
+\dt cv_extracted_data
+
+# Verificar conexión desde Python
+python3 -c "import psycopg2; conn = psycopg2.connect('postgresql://mrgomez:Karin2100@localhost:5432/consultora_db'); print('OK')"
 ```
 
 ### **Problema: SSL no funciona**
@@ -303,11 +305,11 @@ nginx -v
 pm2 --version
 
 # Estado de servicios
-systemctl list-units --type=service --state=running | grep -E "(nginx|mysql|pm2)"
+systemctl list-units --type=service --state=running | grep -E "(nginx|postgresql|pm2)"
 
 # Logs del sistema
 sudo journalctl -u nginx -f
-sudo journalctl -u mysql -f
+sudo journalctl -u postgresql -f
 ```
 
 ### **Contacto:**
@@ -320,7 +322,7 @@ sudo journalctl -u mysql -f
 - [ ] Servicio Python desplegado en puerto 8001
 - [ ] Nginx configurado para api.luminatalentgroup.com
 - [ ] SSL configurado y funcionando
-- [ ] Base de datos conectada y tabla creada
+- [ ] Base de datos PostgreSQL conectada y tabla creada
 - [ ] PM2 ejecutando el servicio
 - [ ] Health check responde correctamente
 - [ ] Backend Node.js actualizado con PYTHON_SERVICE_URL
@@ -336,4 +338,4 @@ Tu servicio Python CV está ahora desplegado y funcionando de forma independient
 **URLs importantes:**
 - 🌐 Servicio: https://api.luminatalentgroup.com
 - 📚 API Docs: https://api.luminatalentgroup.com/docs
-- 🏥 Health: https://api.luminatalentgroup.com/health 
+- 🏥 Health: https://api.luminatalentgroup.com/health

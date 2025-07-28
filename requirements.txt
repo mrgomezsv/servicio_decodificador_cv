@@ -12,5 +12,5 @@ nltk==3.8.1
 textract==1.6.5
 python-magic==0.4.27
 pymongo==4.6.0
-pymysql==1.1.0
+psycopg2-binary==1.1.0
 cryptography==41.0.8 
